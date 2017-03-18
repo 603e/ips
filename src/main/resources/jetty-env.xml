@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="Server" class="org.mortbay.jetty.plugin.JettyServer">
+	<New id="datasource" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>jdbc/datasource</Arg>
+		<Arg>
+			<New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
+				<Set name="URL">jdbc:mysql://120.27.104.36:3306/hpn</Set>
+				<Set name="User">hpn</Set>
+				<Set name="Password">hpn2017</Set>
+			</New>
+		</Arg>
+	</New>
+</Configure>

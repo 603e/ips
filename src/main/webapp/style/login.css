@@ -1,0 +1,134 @@
+body{
+	font-size:12px;
+	font-family:'微软雅黑',Tahoma, Arial, Sans-Serif, '宋体';
+	margin:0;
+	padding:0;
+	background:url(images/loginbj.jpg) repeat-x;
+}
+ul,li,p,input,form,text,textarea,dl,dt,dd,table,tr,td,h1,h2,h3{
+	margin:0;
+	padding:0;
+	list-style:none;
+
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+img{
+	border:none;
+}
+
+.clear{
+	clear:both;
+}
+
+.loginMain{
+	width:628px;
+	height: 250px;
+
+	background: url(images/login.png);
+	position: absolute;
+	top:50%;
+	left:25%;
+	margin-left: -315px;
+	margin-top: -195px;
+
+	padding-top:150px;
+}
+
+.login{
+	width:994px;
+	height: 320px;
+	position: absolute;
+	margin-left: 180px;
+	margin-top: 80px;
+	padding-top:150px;
+	background: url(images/index.jpg); no-repeat;
+	/* width:428px;
+	height: 250px;
+	position: absolute;
+	background: url(images/login.png) no-repeat;
+	margin-left: 950px;
+	margin-top: 300px;
+	padding-top:150px; */
+}
+.login input{
+	width:140px;
+	height:25px;
+	line-height: 32px;
+	border:1;
+	background: none;
+	padding-left:6px;
+}
+.user,.psw{
+	margin-top: -80px;
+	margin-left: 400px;
+}
+.psw{
+	margin-top: 5px;
+}
+.dl{
+	margin-top: 16px;
+	margin-left: 540px;
+}
+input.denglu{
+	width:90px;
+	height: 31px;
+	margin-left: -130px;
+	margin-top: -80px;
+	cursor: pointer;
+	background:red;
+	color: #FFFFFF;
+}
+input.chongzhi{
+	width:70px;
+	height: 31px;
+	margin-top: -78px;
+	margin-left: 10px;
+	background:blue;
+	color: #FFFFFF;
+}
+
+
+.main_left {
+	/* float: left; */
+	width:696px;
+	height: 228px;
+	position: absolute;
+	/* top:50%;
+	left:75%; */
+	background: url(images/login.png) no-repeat;
+	margin-left: 250px;
+	margin-top: 120px;
+	padding-top:150px;
+	/* 
+	
+	width: 755px;
+	height: auto;
+	padding-top: 380px;
+	position: absolute;
+	margin-left: 110px;
+	margin-right: 41px;
+	width: 487px;
+	height: 267px; */
+	background: url(images/index.jpg); no-repeat;
+}
+
+.mainl_link {
+	position: relative;
+	bottom: 40px;
+}
+
+.mainl_link a {
+	color: #0a2cbb;
+	margin: 0px 10px;
+}
+
+.main_right {
+	float: left;
+	width: 350px;
+	height: 267px;
+	overflow: hidden;
+	background: url(images/login.png) no-repeat;
+}
