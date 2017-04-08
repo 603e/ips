@@ -74,6 +74,7 @@
 			<list>
 				<value>zone.framework.model</value>
 				<value>com.hpn.model</value>
+				<value>com.ipsbi.model</value>
 			</list>
 		</property>
 
@@ -105,7 +106,7 @@
 	</tx:advice>
 	<aop:config>
 		<!-- 第一个*代表所有的返回值类型；第二个*代表所有的类；第三个*代表类所有方法；..代表子或者孙子包；最后一个..代表所有的参数 -->
-		<aop:pointcut id="transactionPointcut" expression="(execution(* zone.framework.service..*Impl.*(..)))||(execution(* com.hpn.service..*Impl.*(..)))" />
+		<aop:pointcut id="transactionPointcut" expression="(execution(* zone.framework.service..*Impl.*(..)))||(execution(* com.hpn.service..*Impl.*(..)))||(execution(* com.hpn.servlet..*Servlet.*(..)))||(execution(* com.ipsbi.service..*Impl.*(..)))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
 

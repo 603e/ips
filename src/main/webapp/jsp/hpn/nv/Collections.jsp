@@ -161,6 +161,45 @@
 			$.messager.alert('Info', "请选择一条记录");
 		}
 	};
+
+    
+	var importExecl = function() {
+		var dialog = parent.frm.modalDialog({
+			title : '导入藏品数据',
+			width : 320,
+			height : 240,
+			url : frm.contextPath + '/jsp/hpn/nv/CollectionsUpload.jsp',
+			buttons : [ {
+				text : '导入',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.submitForm(dialog, grid, parent.$, parseData);
+				}
+			} ]
+		});
+	};
+	
+	var parseData = function(files) {
+		var url = frm.contextPath + '/hpn/nv/collections!parseExcel.do';
+		$.post(url, '{"files":'+files+'}', function(result) {
+			parent.frm.progressBar('close');//关闭上传进度条
+
+			if (result.success) {
+				$.messager.alert('提示', result.msg, 'info');
+				$grid.datagrid('load');
+				$dialog.dialog('destroy');
+			} else {
+				$.messager.alert('提示', result.msg, 'error');
+			}
+		}, 'json');
+	}; 
+	var exportExecl = function() {
+		var row = $('#grid').datagrid('getSelected');
+		if (row){
+			return row;
+		}else{
+			$.messager.alert('Info', "请选择一条记录");
+		}
+	};
 </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
@@ -182,18 +221,18 @@
 			<%if (securityUtil.havePermission("/hpn/nv/collections!save")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="addFun();">添加</a></td>
 			<%}%>
-			<%if (securityUtil.havePermission("/hpn/nv/collections!getById")) {%>
-				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="showFun();">查看</a></td>
-			<%}%>
 			<%if (securityUtil.havePermission("/hpn/nv/collections!update")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="editFun();">修改</a></td>
+			<%}%>
+			<%if (securityUtil.havePermission("/hpn/nv/collections!getById")) {%>
+				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="showFun();">查看</a></td>
 			<%}%>
 			<%if (securityUtil.havePermission("/hpn/nv/collections!delete")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="removeFun();">删除</a></td>
 			<%}%>
 			<td><div class="datagrid-btn-separator"></div></td>
-			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-table_add',plain:true" onclick="">导入</a></td>
-			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出</a></td>
+			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-table_add',plain:true" onclick="importExecl()">导入</a></td>
+			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-table_go',plain:true" onclick="exportExecl()">导出</a></td>
 			</tr>
 		</table>
 	</div>

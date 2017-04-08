@@ -111,11 +111,19 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>PlUpload</servlet-name>
-    <servlet-class>zone.framework.util.base.PlUploadServlet</servlet-class>
+    <servlet-class>zone.framework.servlet.PlUploadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PlUpload</servlet-name>
     <url-pattern>/plupload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CollectionsUpload</servlet-name>
+    <servlet-class>com.hpn.service.nv.impl.CollectionsUploadServletImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CollectionsUpload</servlet-name>
+    <url-pattern>/collectionsUpload</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Highcharts</servlet-name>

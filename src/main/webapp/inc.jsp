@@ -87,12 +87,15 @@ if (StringUtils.indexOfIgnoreCase(User_Agent, "MSIE") > -1 && (StringUtils.index
 <%-- 引入Highcharts 
 <script src="<%=contextPath%>/js/Highcharts-3.0.6/js/highcharts.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=contextPath%>/js/Highcharts-3.0.6/js/modules/exporting.src.js" type="text/javascript" charset="utf-8"></script>
+--%>
+
+<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
 <%-- 引入Highcharts扩展 
 <script src="<%=contextPath%>/js/frmExtHighcharts.js?version=<%=version%>" type="text/javascript" charset="utf-8"></script>
---%>
+
 <%-- 引入plupload --%>
-<script type="text/javascript" src="<%=contextPath%>/js/plupload-2.0.0/js/plupload.full.min.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/js/plupload-2.0.0/js/i18n/zh_CN.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/plupload-2.0.0/plupload.full.min.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/plupload-2.0.0/zh_CN.js"></script>
 
 <%-- 引入EasyUI --%>
 <link id="easyuiTheme" rel="stylesheet" href="<%=contextPath%>/js/jquery-easyui-1.5.1/themes/<%=easyuiTheme%>/easyui.css" type="text/css">

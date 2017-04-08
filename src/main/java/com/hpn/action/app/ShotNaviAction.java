@@ -1,24 +1,22 @@
 package com.hpn.action.app;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hpn.model.nv.CollectionsPO;
 import com.hpn.model.nv.ShotNaviPO;
 import com.hpn.service.nv.ShotNaviServiceI;
 
+import sun.misc.BASE64Decoder;
 import zone.framework.action.BaseAction;
 import zone.framework.util.base.ImageBase64Util;
 
@@ -58,15 +56,37 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 	synchronized public void obtainCollections() {
 		try {
 			if (data == null) {
-				ServletInputStream inputStream = getRequest().getInputStream();
-				OutputStream bos = new ByteArrayOutputStream();
-				byte[] buf = new byte[1024];
-				while ((inputStream.read(buf)) != -1) {
-					bos.write(buf, 0, buf.length);
-				}
-				JSONObject requestJson = JSONObject.parseObject(bos.toString());
-				data = new ShotNaviPO();
-				data.setMacCode(requestJson.getString("macCode"));
+				HttpServletRequest request = getRequest();
+				request.setCharacterEncoding("utf-8");  
+		        String macCode = request.getParameter("macCode");  
+		        String operater = request.getParameter("operater");  
+		        String photo = request.getParameter("photo");  
+		        
+		        System.out.println("photo:=" + photo);
+		        System.out.println("macCode:=" + macCode);
+		        System.out.println("operater:=" + operater);
+		        
+		        try {  
+		        	  
+		            // 对base64数据进行解码 生成 字节数组，不能直接用Base64.decode（）；进行解密  
+		            byte[] photoimg = new BASE64Decoder().decodeBuffer(photo);  
+		            for (int i = 0; i < photoimg.length; ++i) {  
+		                if (photoimg[i] < 0) {  
+		                    // 调整异常数据  
+		                    photoimg[i] += 256;  
+		                }  
+		            } 
+		            // byte[] photoimg = Base64.decode(photo);//此处不能用Base64.decode（）方法解密，我调试时用此方法每次解密出的数据都比原数据大  所以用上面的函数进行解密，在网上直接拷贝的，花了好几个小时才找到这个错误（菜鸟不容易啊）  
+		            System.out.println("图片的大小：" + photoimg.length);
+		            
+		        } catch (Exception e) {  
+		            // TODO Auto-generated catch block  
+		            e.printStackTrace();  
+		        }  
+		        data = new ShotNaviPO();
+		        data.setPhoto(photo);
+		        data.setMacCode(macCode);
+		        
 			}
 			//处理拍摄的客户的照片
 			if(!StringUtils.isBlank(data.getPhoto())){

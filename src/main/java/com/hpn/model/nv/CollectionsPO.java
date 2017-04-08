@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -42,6 +43,8 @@ public class CollectionsPO extends Base implements Serializable{
 	private double latitude;
 	//纵坐标（Y轴、经度）
 	private double longitude;
+	//上传excel文件的临时地址，不保存到数据库
+	private String fileUrl;
 	
 	//该藏品资源被谁请求过
 	private Set<SpotDataPO> spotDatas = new HashSet<SpotDataPO>(0);
@@ -115,6 +118,13 @@ public class CollectionsPO extends Base implements Serializable{
 	}
 	public void setShotNavis(Set<ShotNaviPO> shotNavis) {
 		this.shotNavis = shotNavis;
+	}
+	@Transient
+	public String getFileUrl() {
+		return fileUrl;
+	}
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl;
 	}
 	
 }

@@ -24,7 +24,6 @@
 	};
 </script>
 <div id="sessionInfoDiv" style="position: absolute; right: 10px; top: 5px;height: 60px;">
-	博物馆导航导览系统
 	<font size="3" face="arial" color="red">欢迎您！</font>
 	<font size="3" face="arial" color="red"><strong>
 	<%

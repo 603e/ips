@@ -1,5 +1,10 @@
 package com.hpn.action.nv;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+
+import javax.servlet.ServletInputStream;
+
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -61,4 +66,26 @@ public class CollectionsAction extends BaseAction<CollectionsPO> {
 		writeJson(json);
 	}
 	
+	/**
+	 * 保存导览请求
+	 */
+	synchronized public void parseExcel() {
+		Json json = new Json();
+		try {
+			if (data == null) {
+				ServletInputStream inputStream = getRequest().getInputStream();
+				OutputStream bos = new ByteArrayOutputStream();
+				byte[] buf = new byte[1024];
+				while ((inputStream.read(buf)) != -1) {
+					bos.write(buf, 0, buf.length);
+				}
+			}
+		} catch (Exception e) { 
+            e.printStackTrace();
+        }	
+		if (data != null) {
+			
+		}
+		writeJson(json);
+	}
 }

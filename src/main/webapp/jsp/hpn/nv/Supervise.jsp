@@ -12,12 +12,13 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<%-- 引入扩展图标 --%>
 	<link rel="stylesheet" href="<%=contextPath%>/style/syExtIcon.css" type="text/css">
+<!-- 
 	<link rel="stylesheet" href="<%=contextPath%>/js/mapbox-gl/mapbox-gl_v0.32.1.css" type="text/css">
 	<script type="text/javascript" src="<%=contextPath%>/js/mapbox-gl/mapbox-gl_v0.32.1.js" charset="utf-8"></script>
-<!-- 
+ -->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.css' rel='stylesheet' />
- -->
+
      <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:99%; float:left; }
@@ -35,7 +36,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwZXIiLCJhIjoiY2l3dm9qdzRiMDAxMTJ6cGY2ZHlzOTRvNCJ9.WcJV0GCgk_4XXHa8cnmi_Q';
 var styleLocation = 'mapbox://styles/maper/ciwvpz28c002z2qpqxdg2m5cy';
 	//styleLocation = 'mapbox://styles/maper/cizfl4jyx007m2sji1ndyc4nl';
-	styleLocation = '../../../mapboxData0306.json'
+	//styleLocation = '../../../mapboxData0306.json'
 var map = new mapboxgl.Map({
     container: 'map', // container id
     style: styleLocation, //stylesheet location
