@@ -76,6 +76,49 @@
 				}
 			});
 	};
+	
+	var loginFun = function() {
+
+		var row = $('#grid').datagrid('getSelected');
+		var rowId;
+		if (row){
+			rowId = row.id;
+		}else{
+			$.messager.alert('Info', "请选择一条记录");
+			return;			
+		}
+		var dialog = parent.frm.modalDialog({
+			title : '编辑用户信息',
+			url : frm.contextPath + '/jsp/hpn/cr/CustomerLoginForm.jsp?id=' + rowId,
+			buttons : [ {
+				text : '登录',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.submitForm(dialog, grid, parent.$);
+				}
+			} ]
+		});
+		
+	};
+
+	var logoutFun = function(id) {
+		var row = $('#grid').datagrid('getSelected');
+		var rowId;
+		if (row){
+			rowId = row.id;
+		}else{
+			$.messager.alert('Info', "请选择一条记录");
+			return;			
+		}
+		parent.$.messager.confirm('询问', '该用户确认退出吗？', function(r) {
+			if (r) {
+					$.post(frm.contextPath + '/hpn/cr/customer!logout.do', {
+						id : rowId
+					}, function() {
+						grid.datagrid('reload');
+					}, 'json');
+				}
+			});
+	};
 	$(function() {
 		grid = $('#grid').datagrid({
 			title : '',
@@ -91,9 +134,29 @@
 			pageList : [ 5, 10,50, 100, 500 ],
 			frozenColumns : [ [ {
 				width : '80',
+				title : '用户名',
+				field : 'number',
+				sortable : true
+			},{
+				width : '80',
 				title : '姓名',
 				field : 'name',
 				sortable : true
+			},
+			{
+				width : '120',
+				title : '证件号码',
+				field : 'idCode',
+				sortable : true
+			}  ] ],
+			columns : [ [ {
+				width : '100',
+				title : '联系电话',
+				field : 'phoneNumber'
+			},{
+				width : '100',
+				title : '电子邮件',
+				field : 'email'
 			},{
 				width : '40',
 				title : '性别',
@@ -107,18 +170,7 @@
 						return '男';
 					}
 				}
-			},
-			{
-				width : '120',
-				title : '证件号码',
-				field : 'idNumber',
-				sortable : true
-			}  ] ],
-			columns : [ [ {
-				width : '100',
-				title : '联系电话',
-				field : 'phoneNumber'
-			}, {
+			},{
 				width : '70',
 				title : '出生日期',
 				field : 'birthday',
@@ -132,17 +184,7 @@
 				width : '100',
 				title : '备用电话',
 				field : 'secondPhoneNumber'
-			}, {
-				width : '100',
-				title : '居住地址',
-				field : 'address',
-				hidden : true
-			}, {
-				width : '100',
-				title : '证件地址',
-				field : 'idAddress',
-				hidden : true
-			}, {
+			},  {
 				width : '250',
 				title : '照片',
 				field : 'photo',
@@ -184,6 +226,7 @@
 			$.messager.alert('Info', "请选择一条记录");
 		}
 	};
+	
 </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
@@ -221,6 +264,13 @@
 			<%}%>
 			<%if (securityUtil.havePermission("/hpn/cr/customer!delete")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="removeFun();">删除</a></td>
+			<%}%>
+			<td><div class="datagrid-btn-separator"></div></td>
+			<%if (securityUtil.havePermission("/hpn/cr/customer!login")) {%>
+				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="loginFun();">登录</a></td>
+			<%}%>
+			<%if (securityUtil.havePermission("/hpn/cr/customer!logout")) {%>
+				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="logoutFun();">退出</a></td>
 			<%}%>
 			<td><div class="datagrid-btn-separator"></div></td>
 			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-table_add',plain:true" onclick="">导入</a></td>

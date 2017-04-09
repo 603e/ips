@@ -24,7 +24,7 @@
 			{
 				text : '获取图片',
 				handler : function() {
-					dialog.find('iframe').get(0).contentWindow.obtainPictures(dialog, grid, parent.$);
+					dialog.find('iframe').get(0).contentWindow.findPictures(dialog, grid, parent.$);
 				}
 			} ]
 		});

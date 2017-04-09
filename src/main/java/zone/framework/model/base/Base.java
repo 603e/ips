@@ -15,7 +15,7 @@ public class Base {
 
 	private String id;
 	private String operater;
-	private int deleteFlag;
+	private String deleteFlag;
 	private Date createDatetime;
 	private Date updateDatetime;
 	@Id
@@ -43,11 +43,11 @@ public class Base {
 		return new Date();
 	}
 	@Column(name = "deleteFlag", length = 1)
-	public int getDeleteFlag() {
+	public String getDeleteFlag() {
 		return deleteFlag;
 	}
 
-	public void setDeleteFlag(int deleteFlag) {
+	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
 	public void setId(String id) {

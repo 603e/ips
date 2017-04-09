@@ -62,9 +62,9 @@ public class SpotDataAction extends BaseAction<SpotDataPO> {
 	/**
 	 * 获取导览当前位置的藏品信息
 	 */
-	synchronized public void obtainCollectionses() {
+	synchronized public void findCollectionses() {
 		if (data != null) {
-			List<CollectionsPO> pos = collectionsService.obtainCollectionses(data.getLatitude(),data.getLongitude(),data.getAzimuth());
+			List<CollectionsPO> pos = collectionsService.findCollectionses(data.getLatitude(),data.getLongitude(),data.getAzimuth());
 			((SpotDataServiceI)service).saveSpotData(data, pos);
 			data.setCollectionses(new HashSet<CollectionsPO>(pos));
 			writeJson(data);

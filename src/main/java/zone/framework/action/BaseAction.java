@@ -146,7 +146,7 @@ public class BaseAction<T> extends ActionSupport {
 	 * @param relatAddTeature
 	 *            附加的关联特性，如果不需要请输入null
 	 */
-	public int obtainSerialNumber(String relatTeature, String relatAddTeature) {
+	public int findSerialNumber(String relatTeature, String relatAddTeature) {
 		HqlFilter hqlFilter = new HqlFilter();
 		hqlFilter.addFilter("QUERY_t#metaTable_S_EQ", "IFR_LOANTICKET");
 		hqlFilter.addFilter("QUERY_t#metaColumn_S_EQ", "number");

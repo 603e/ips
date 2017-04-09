@@ -9,6 +9,8 @@ import java.util.Map;
 import zone.framework.dao.base.BaseDaoI;
 import zone.framework.service.BaseServiceI;
 import zone.framework.util.base.HqlFilter;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BaseServiceImpl<T> implements BaseServiceI<T> {
+	
+	protected Logger logger = Logger.getLogger(BaseServiceImpl.class);
 
 	@Autowired
 	private BaseDaoI<T> baseDao;

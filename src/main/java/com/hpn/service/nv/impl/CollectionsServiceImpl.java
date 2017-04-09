@@ -34,7 +34,7 @@ public class CollectionsServiceImpl extends BaseServiceImpl<CollectionsPO> imple
 	private BaseDaoI<CollectionsPO> baseDao;
 	
 	@Override
-	public List<CollectionsPO> obtainCollectionses(double latitude,double longitude, int azimuth) {
+	public List<CollectionsPO> findCollectionses(double latitude,double longitude, int azimuth) {
 		double raidus=0.001;
 		String hql = new StringBuilder("select c from CollectionsPO c")
 				.append(" WHERE c.latitude >").append(latitude).append(" - ").append(raidus)

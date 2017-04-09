@@ -55,7 +55,7 @@ public class ShotNaviActionW extends BaseAction<ShotNaviPO> {
 	/**
 	 * 获取导览当前位置的藏品信息
 	 */
-	synchronized public void obtainCollections() {
+	synchronized public void findCollections() {
 		try {
 			if (data == null) {
 				ServletInputStream inputStream = getRequest().getInputStream();

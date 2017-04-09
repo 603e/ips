@@ -42,22 +42,27 @@
 			$.post(frm.contextPath + '/hpn/cr/customer!getById.do', {
 				id : $(':input[name="data.id"]').val()
 			}, function(result) {
+				parent.$.messager.progress('close');
 				if (result.id != undefined) {
+					var birthday;
+					if (result.birthday !== null && result.birthday !== undefined && result.birthday !== '') { 
+						birthday = result.birthday.substring(0,10); 
+					}
 					$('form').form('load', {
 						'data.id' : result.id,
+						'data.number' : result.number,
+						'data.password' : '',
 						'data.name' : result.name,
-						'data.idNumber' : result.idNumber,
+						'data.idCode' : result.idCode,
+						'data.email' : result.email,
 						'data.occupation' : result.occupation,
 						'data.sex' : result.sex,
-						'data.birthday' : result.birthday.substring(0,10),
+						'data.birthday' : birthday,
 						'data.phoneNumber' : result.phoneNumber,
 						'data.secondPhoneNumber' : result.secondPhoneNumber,
-						'data.address' : result.address,
-						'data.idAddress' : result.idAddress,
 						'data.photo' : result.photo
 					});
 				}
-				parent.$.messager.progress('close');
 			}, 'json');
 		}
 	});
@@ -71,8 +76,8 @@
 			<legend>客户基本信息</legend>
 			<table class="table" style="width: 100%;">
 				<tr>
-					<th>姓名</th>
-					<td><input name="data.name" class="easyui-validatebox" data-options="required:true" /></td>	
+					<th>用户名</th>
+					<td><input name="data.number" class="easyui-validatebox" data-options="required:true" maxlength="16"/></td>	
 					<th>照片上传</th>
 					<td><div id="container">
 							<a id="pickfiles" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-zoom'">选择文件</a>
@@ -80,12 +85,24 @@
 					</td>
 				</tr>
 				<tr>
-					<th>证件号码</th>
-					<td><input name="data.idNumber" /></td>
-					<td colspan="2" rowspan="6">
+					<th>密码</th>
+					<td><input name="data.password" class="easyui-validatebox" data-options="required:true" /></td>	
+					<td colspan="2" rowspan="8">
 					  <input name="data.photo" readonly="readonly" style="display: none;" />
 					  <img id="photo" src="" style="width: 180px; height: 180px;">
 					</td>
+				</tr>
+				<tr>
+					<th>姓名</th>
+					<td><input name="data.name"/></td>
+				</tr>
+				<tr>
+					<th>联系电话</th>
+					<td><input name="data.phoneNumber" /></td>			
+				</tr>	
+				<tr>
+					<th>证件号码</th>
+					<td><input name="data.idCode" /></td>
 				</tr>				
 				<tr>
 					<th>职业</th>
@@ -101,25 +118,17 @@
 				<tr>
 					<th>出生日期</th>
 					<td>
-						<input name="data.birthday" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" style="width: 90px;" />
+						<input name="data.birthday" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"/>
 						<!-- <input id="birthday" name="data.birthday" type="text" class="easyui-datebox" style="width: 100px;"> -->
 					</td>
-				</tr>
-				<tr>
-					<th>联系电话</th>
-					<td><input name="data.phoneNumber" /></td>			
 				</tr>
 				<tr>
 					<th>备用电话</th>
 					<td><input name="data.secondPhoneNumber" /></td>			
 				</tr>
 				<tr>
-					<th>居住地址</th>
-					<td colspan="3"><input name="data.address" style="width: 400px;"/></td>			
-				</tr>
-				<tr>
-					<th>证件地址</th>
-					<td colspan="3"><input name="data.idAddress" style="width: 400px;"/></td>			
+					<th>电子邮件</th>
+					<td><input name="data.email" style="width: 210px;"/></td>			
 				</tr>
 			</table>
 		</fieldset>

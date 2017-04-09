@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -53,19 +52,14 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 	/**
 	 * 获取导览当前位置的藏品信息
 	 */
-	synchronized public void obtainCollections() {
+	synchronized public void findCollections() {
 		try {
 			if (data == null) {
 				HttpServletRequest request = getRequest();
 				request.setCharacterEncoding("utf-8");  
 		        String macCode = request.getParameter("macCode");  
 		        String operater = request.getParameter("operater");  
-		        String photo = request.getParameter("photo");  
-		        
-		        System.out.println("photo:=" + photo);
-		        System.out.println("macCode:=" + macCode);
-		        System.out.println("operater:=" + operater);
-		        
+		        String photo = request.getParameter("photo");		        
 		        try {  
 		        	  
 		            // 对base64数据进行解码 生成 字节数组，不能直接用Base64.decode（）；进行解密  

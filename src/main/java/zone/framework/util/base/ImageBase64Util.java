@@ -36,8 +36,7 @@ public class ImageBase64Util {
 				fileParent.mkdirs();
 			}
 			
-			byte[] b = decoder.decodeBuffer(base64str.replace(
-					"data:image/png;base64,", ""));
+			byte[] b = decoder.decodeBuffer(base64str.replace("data:image/png;base64,", ""));
 			for (int i = 0; i < b.length; ++i) {
 				if (b[i] < 0) {
 					b[i] += 256;

@@ -2,9 +2,13 @@ package com.hpn.model.cr;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,10 +29,20 @@ public class CustomerPO extends Base implements Serializable{
 	 * 继成父类的 deleteFlag 作为作废标识 0：正常；1：作废
 	 */
 	private static final long serialVersionUID = 1L;
+	//电子邮件地址
+	private String email;
+	//编号
+	private String number;
+	//mac码
+	private String macCode;
+	//联系电话号码
+	private String phoneNumber;
 	//客户姓名
 	private String name;
+	//密码
+	private String password;
 	//身份证件号码
-	private String idNumber;
+	private String idCode;
 	//出生日期
 	private Date birthday;
 	//职业
@@ -37,23 +51,24 @@ public class CustomerPO extends Base implements Serializable{
 	private String sex;
 	//客户照片
 	private String photo;
-	//身份证件地址
-	private String idAddress;
-	//居住地址
-	private String address;
-	//联系电话号码
-	private String phoneNumber;
 	//备用电话号码
 	private String secondPhoneNumber;
 	
-	@Column(name = "idNumber", length = 20)
-	public String getIdNumber() {
-		return idNumber;
-	}
-	
+	//该游客的登录记录
+	private Set<CustomerOnlinePO> onlines = new HashSet<CustomerOnlinePO>(0);
+
 	@Column(name = "name", length = 64)
 	public String getName() {
 		return name;
+	}
+	
+	@Column(name = "idCode", length = 20)
+	public String getIdCode() {
+		return idCode;
+	}
+
+	public void setIdCode(String idCode) {
+		this.idCode = idCode;
 	}
 
 	@Column(name = "sex", length = 1)
@@ -77,16 +92,6 @@ public class CustomerPO extends Base implements Serializable{
 		return this.photo;
 	}
 
-	@Column(name = "idAddress", length = 16)
-	public String getIdAddress() {
-		return idAddress;
-	}
-
-	@Column(name = "address", length = 16)
-	public String getAddress() {
-		return address;
-	}
-
 	@Column(name = "phoneNumber", length = 16)
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -105,9 +110,6 @@ public class CustomerPO extends Base implements Serializable{
 		this.photo = photo;
 	}
 
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
@@ -121,14 +123,6 @@ public class CustomerPO extends Base implements Serializable{
 		this.sex = sex;
 	}
 
-	public void setIdAddress(String idAddress) {
-		this.idAddress = idAddress;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -136,4 +130,49 @@ public class CustomerPO extends Base implements Serializable{
 	public void setSecondPhoneNumber(String secondPhoneNumber) {
 		this.secondPhoneNumber = secondPhoneNumber;
 	}
+
+	@Column(name = "number", length = 16)
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	@Column(name = "email", length = 32)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name = "password", length = 32)
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+	public Set<CustomerOnlinePO> getOnlines() {
+		return onlines;
+	}
+
+	public void setOnlines(Set<CustomerOnlinePO> onlines) {
+		this.onlines = onlines;
+	}
+
+	public String getMacCode() {
+		return macCode;
+	}
+
+	public void setMacCode(String macCode) {
+		this.macCode = macCode;
+	}
+	
 }

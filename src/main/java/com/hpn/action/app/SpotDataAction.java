@@ -53,7 +53,7 @@ public class SpotDataAction extends BaseAction<SpotDataPO>{
 	/**
 	 * 获取导览当前位置的藏品信息
 	 */
-	public void obtainCollectionses() {
+	public void findCollectionses() {
 		try {
 			if (data == null) {
 				ServletInputStream inputStream = getRequest().getInputStream();
@@ -72,7 +72,7 @@ public class SpotDataAction extends BaseAction<SpotDataPO>{
 				bos.close();
 			}
 			
-			List<CollectionsPO> pos = collectionsService.obtainCollectionses(data.getLatitude(),data.getLongitude(),data.getAzimuth());
+			List<CollectionsPO> pos = collectionsService.findCollectionses(data.getLatitude(),data.getLongitude(),data.getAzimuth());
 			data.setCollectionses( new HashSet<CollectionsPO>(pos));
 			service.save(data);
 			writeJson(data);

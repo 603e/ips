@@ -65,7 +65,7 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 	/**
 	 * 获取导览当前位置的藏品信息
 	 */
-	synchronized public void obtainCollections() {
+	synchronized public void findCollections() {
 		if (data != null) {
 			//处理拍摄的客户的照片
 			if(!StringUtils.isBlank(data.getPhoto())){
