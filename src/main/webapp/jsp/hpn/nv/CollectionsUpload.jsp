@@ -51,7 +51,7 @@
 		});
 		uploader.bind('Init', function(uploader, params) {//初始化时
 			//$('#filelist').html("<div>当前运行环境: " + params.runtime + "</div>");
-			//$('#filelist').html("");
+			$('#filelist').html("");
 		});
 		uploader.bind('BeforeUpload', function(uploader, file) {
 			//上传之前

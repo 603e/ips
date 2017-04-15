@@ -119,7 +119,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>CollectionsUpload</servlet-name>
-    <servlet-class>com.hpn.service.nv.impl.CollectionsUploadServletImpl</servlet-class>
+    <servlet-class>com.hpn.servlet.CollectionsUploadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CollectionsUpload</servlet-name>

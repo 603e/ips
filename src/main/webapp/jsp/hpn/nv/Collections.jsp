@@ -74,9 +74,11 @@
 		}
 		parent.$.messager.confirm('询问', '您确定要删除此记录？', function(r) {
 			if (r) {
+					parent.$.messager.progress({text : '处理中....'});
 					$.post(frm.contextPath + '/hpn/nv/collections!delete.do', {
 						id : rowId
 					}, function() {
+						parent.$.messager.progress('close');
 						grid.datagrid('reload');
 					}, 'json');
 				}

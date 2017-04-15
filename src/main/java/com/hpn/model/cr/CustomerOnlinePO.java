@@ -66,7 +66,7 @@ public class CustomerOnlinePO implements java.io.Serializable {
 		this.macCode = macCode;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_id")
 	public CustomerPO getCustomer() {
 		return customer;

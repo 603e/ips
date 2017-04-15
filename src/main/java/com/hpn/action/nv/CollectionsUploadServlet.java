@@ -1,16 +1,9 @@
-package com.hpn.servlet;
+package com.hpn.action.nv;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -31,14 +23,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.hpn.model.nv.CollectionsPO;
 import com.hpn.service.nv.CollectionsUploadServiceI;
 
 import zone.framework.model.base.SessionInfo;
@@ -93,7 +81,6 @@ public class CollectionsUploadServlet extends HttpServlet {
 		String tempFileName = null;// 上传到服务器的临时文件名
 		String newFileName = null;// 最后合并后的新文件名
 		BufferedOutputStream outputStream = null;
-		Connection conn = null;
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -147,18 +134,14 @@ public class CollectionsUploadServlet extends HttpServlet {
 					CollectionsUploadServiceI service = (CollectionsUploadServiceI)ctx.getBean("collectionsServiceImpl");
 					SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 					String operater =sessionInfo.getUser().getLoginName();
-					/*if (service.upload(operater,outFile)) {
+					if (service.upload(operater,outFile)) {
 					} else {
 						Map<String, Object> m = new HashMap<String, Object>();
 						m.put("status", false);
 						response.getWriter().write(JSON.toJSONString(m));
 						return;
-					}*/
-					//List<CollectionsPO> collectionses = upload(operater, outFile);
-					DataSource ds=(DataSource)ctx.getBean("dataSource");      
-					conn=ds.getConnection();  
-					Statement stmt = conn.createStatement();  
-					stmt.execute("INSERT INTO hpn_collections (id,operater) VALUES ('12323','0oo') "); 
+					}
+					;
 				}
 				Map<String, Object> m = new HashMap<String, Object>();
 				m.put("status", true);
@@ -176,12 +159,6 @@ public class CollectionsUploadServlet extends HttpServlet {
 				response.getWriter().write(JSON.toJSONString(m));
 			} finally {
 				try {
-					try {
-						conn.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}  
 					if (outputStream != null) {
 						outputStream.close();
 					}
@@ -192,41 +169,4 @@ public class CollectionsUploadServlet extends HttpServlet {
 		}
 	
 	}
-	
-	public List<CollectionsPO> upload(String operater, File file) {
-		//String filePath = "E:/SVN/doc/08_系统运维/import/典当系统用表1.xls";
-		List<CollectionsPO> collectionses = new ArrayList<CollectionsPO>();
-		try {
-			
-			InputStream is = new FileInputStream(file.getAbsolutePath());
-			XSSFWorkbook wb = new XSSFWorkbook(is);  
-			int scounts = wb.getNumberOfSheets();//获取表的总数  
-			for(int i =0 ; i<scounts; i++){
-					Sheet sheet = wb.getSheetAt(i);
-					int j = 0;
-			        for (Row row : sheet) {
-			        	CollectionsPO collections = new CollectionsPO();
-			        	if(j++==0||row.getCell(0)==null){
-			        		continue;
-			        	}
-			        	collections.setNumber(String.valueOf(row.getCell(0).getNumericCellValue()));
-			        	collections.setName(row.getCell(1).getStringCellValue());
-			        	collections.setLatitude(row.getCell(2).getNumericCellValue());
-			        	collections.setLongitude(row.getCell(3).getNumericCellValue());
-			        	collections.setPictureUrl(row.getCell(1).getStringCellValue());
-			        	collections.setVoiceUrl(row.getCell(5).getStringCellValue());
-			        	collections.setCommentText(row.getCell(1).getStringCellValue());
-			        	collections.setOperater(operater);
-			        	collectionses.add(collections);
-			        	//save(collections);
-			        }
-			}
-			// 关闭
-	        is.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return collectionses;
-		}
 }
