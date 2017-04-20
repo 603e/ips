@@ -58,7 +58,7 @@ public class CustomerServiceImpl extends BaseServiceImpl<CustomerPO> implements 
 	 */
 	public boolean login(CustomerPO data) {
 		HqlFilter hqlFilter = new HqlFilter();
-		hqlFilter.addFilter("QUERY_t#id_S_EQ", data.getId());
+		hqlFilter.addFilter("QUERY_t#id_S_EQ", data.getNumber());
 		hqlFilter.addFilter("QUERY_t#deleteFlag_S_EQ", "0");
 		CustomerPO customer = getByFilter(hqlFilter);
 		if (customer == null) {

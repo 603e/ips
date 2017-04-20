@@ -106,8 +106,7 @@ public class CustomerAction extends BaseAction<CustomerPO> {
 			if (data == null) {
 				data = getVoFromRequest();
 			}
-			if (data != null && !StringUtils.isBlank(data.getId())
-					&&((CustomerServiceI)service).login(data)) {
+			if (data != null&&((CustomerServiceI)service).login(data)) {
 				json.setSuccess(true);
 				json.setMsg("登录成功！");					
 			}

@@ -152,26 +152,7 @@
 
 	});	
 
-	var pickupOrgFun = function(id) {
-		if(id == "60366688-0001-0001-0011-888888user01"){
-			parent.$.messager.alert("提示信息","您没有权限操作超级管理员!");
-		}else{
-			var dialog = parent.frm.modalDialog({
-				title : '修改机构',
-				url : frm.contextPath + '/jsp/base/FrmUserOrganizationGrant.jsp?id=' + id,
-				buttons : [ {
-					text : '选择',
-					handler : function() {
-						var row = dialog.find('iframe').get(0).contentWindow.selectSingle();
-						$('#organizationId').val(row.id);
-						$('#orgName').text(row.name);
-						$('#orgCode').val(row.orgCode);
-						dialog.dialog('close');
-					}
-				} ]
-			});
-		}
-	};
+
 </script>
 </head>
 <body>
@@ -201,7 +182,7 @@
 						<input id = "orgCode" name="data.orgCode" readonly="readonly" />
 						<a onclick="pickupOrgFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-zoom'"></a>
 					</td>
-					<td colspan="2"><input id="organizationId" name="data.frmOrganization.id" type="hidden"/><label id="orgName"></label></td>
+					<td colspan="2"><input id="orgId" name="data.frmOrganization.id" type="hidden"/><label id="orgName"></label></td>
 				</tr>
 				<tr>
 					<th>照片上传</th>

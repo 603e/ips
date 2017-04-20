@@ -3,6 +3,7 @@ package com.hpn.model.cr;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -66,7 +67,7 @@ public class CustomerOnlinePO implements java.io.Serializable {
 		this.macCode = macCode;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(optional = true, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_id")
 	public CustomerPO getCustomer() {
 		return customer;

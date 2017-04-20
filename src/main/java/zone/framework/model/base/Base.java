@@ -15,7 +15,7 @@ public class Base {
 
 	private String id;
 	private String operater;
-	private String deleteFlag;
+	private String deleteFlag="0";
 	private Date createDatetime;
 	private Date updateDatetime;
 	@Id
@@ -62,7 +62,7 @@ public class Base {
 		this.updateDatetime = updateDatetime;
 	}
 
-	@Column(name = "operater", nullable = false, length = 20)
+	@Column(name = "operater",length = 20)
 	public String getOperater() {
 		return operater;
 	}

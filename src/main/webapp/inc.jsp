@@ -116,3 +116,6 @@ if (StringUtils.indexOfIgnoreCase(User_Agent, "MSIE") > -1 && (StringUtils.index
 
 <%-- 引入javascript扩展 --%>
 <script src="<%=contextPath%>/js/frmExtJavascript.js?version=<%=version%>" type="text/javascript" charset="utf-8"></script>
+
+<%-- 引入公共JS扩展 --%>
+<script src="<%=contextPath%>/js/frmCommon.js?version=<%=version%>" type="text/javascript" charset="utf-8"></script>

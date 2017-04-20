@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,6 +18,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import zone.framework.model.base.Base;
+import zone.framework.model.base.OrganizationPO;
 
 @Entity
 @Table(name = "hpn_collections", schema = "")
@@ -51,6 +53,9 @@ public class CollectionsPO extends Base implements Serializable{
 	
 	//该藏品资源被谁请求过
 	private Set<ShotNaviPO> shotNavis = new HashSet<ShotNaviPO>(0);
+	
+	//藏品在哪个地图上
+	private IndoorMapPO indoorMap;
 	
 	@Column(name = "name", length = 64)
 	public String getName() {
@@ -125,6 +130,15 @@ public class CollectionsPO extends Base implements Serializable{
 	}
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "indoorMap_id")
+	public IndoorMapPO getIndoorMap() {
+		return indoorMap;
+	}
+	public void setIndoorMap(IndoorMapPO indoorMap) {
+		this.indoorMap = indoorMap;
 	}
 	
 }

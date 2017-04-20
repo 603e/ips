@@ -13,8 +13,8 @@
 	var grid;
 	var addFun = function() {
 		var dialog = parent.frm.modalDialog({
-			title : '添加藏品信息',
-			url : frm.contextPath + '/jsp/hpn/nv/CollectionsForm.jsp',
+			title : '添加地图信息',
+			url : frm.contextPath + '/jsp/hpn/nv/IndoorMapForm.jsp',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
@@ -39,8 +39,8 @@
 			return;			
 		}
 		var dialog = parent.frm.modalDialog({
-			title : '查看藏品信息',
-			url : frm.contextPath + '/jsp/hpn/nv/CollectionsForm.jsp?id=' + rowId
+			title : '查看地图信息',
+			url : frm.contextPath + '/jsp/hpn/nv/IndoorMapForm.jsp?id=' + rowId
 		});
 	};
 	var editFun = function(id) {
@@ -53,8 +53,8 @@
 			return;			
 		}
 		var dialog = parent.frm.modalDialog({
-			title : '编辑藏品信息',
-			url : frm.contextPath + '/jsp/hpn/nv/CollectionsForm.jsp?id=' + rowId,
+			title : '编辑地图信息',
+			url : frm.contextPath + '/jsp/hpn/nv/IndoorMapForm.jsp?id=' + rowId,
 			buttons : [ {
 				text : '更新',
 				handler : function() {
@@ -75,7 +75,7 @@
 		parent.$.messager.confirm('询问', '您确定要删除此记录？', function(r) {
 			if (r) {
 					parent.$.messager.progress({text : '处理中....'});
-					$.post(frm.contextPath + '/hpn/nv/collections!delete.do', {
+					$.post(frm.contextPath + '/hpn/nv/indoorMap!delete.do', {
 						id : rowId
 					}, function() {
 						parent.$.messager.progress('close');
@@ -87,7 +87,7 @@
 	$(function() {
 		grid = $('#grid').datagrid({
 			title : '',
-			url : frm.contextPath + '/hpn/nv/collections!grid.do',
+			url : frm.contextPath + '/hpn/nv/indoorMap!grid.do',
 			striped : true,
 			rownumbers : true,
 			pagination : true,
@@ -98,50 +98,49 @@
 			pageSize : 50,
 			pageList : [ 5, 10,50, 100, 500 ],
 			frozenColumns : [ [ 
-			{
-				width : '120',
-				title : '藏品名称',
-				field : 'name',
-				sortable : true
-			},
-			{
-				width : '120',
-				title : '经度',
-				field : 'longitude',
-				sortable : true
-			},                   
-			{
-				width : '120',
-				title : '纬度',
-				field : 'latitude',
-				sortable : true
-			}] ],
-			columns : [ [ {
-				width : '80',
-				title : '图片URL',
-				field : 'pictureUrl',
-				sortable : true
-			},{
-				width : '80',
-				title : '语音URL',
-				field : 'voiceUrl',
-				sortable : true
-			},{
-				width : '180',
-				title : '讲解文字',
-				field : 'commentText',
-				sortable : true
-			},{
-				width : '150',
-				title : '创建时间',
-				field : 'createDatetime ',
-				sortable : true
-			}, {
-				width : '150',
-				title : '修改时间',
-				field : 'updateDatetime',
-				sortable : true
-			} ] ],
+				{
+					width : '120',
+					title : '地图编码',
+					field : 'number',
+					sortable : true
+				},
+				{
+					width : '120',
+					title : '地图名称',
+					field : 'name',
+					sortable : true
+				}
+			] ],
+			columns : [ [
+				{
+					width : '220',
+					title : '资源地址',
+					field : 'mapUrl',
+					sortable : true
+				},
+				{
+					width : '120',
+					title : '所属组织',
+					field : 'organization.name',
+					sortable : true
+				},                   
+				{
+					width : '220',
+					title : '说明',
+					field : 'comment',
+					sortable : true
+				},{
+					width : '150',
+					title : '创建时间',
+					field : 'createDatetime ',
+					sortable : true
+				}, {
+					width : '150',
+					title : '修改时间',
+					field : 'updateDatetime',
+					sortable : true
+				}				                   
+			 ] ],
 			toolbar : '#toolbar',
 			onBeforeLoad : function(param) {
 				parent.$.messager.progress({
@@ -167,10 +166,10 @@
     
 	var importExecl = function() {
 		var dialog = parent.frm.modalDialog({
-			title : '导入藏品数据',
+			title : '导入地图数据',
 			width : 320,
 			height : 240,
-			url : frm.contextPath + '/jsp/hpn/nv/CollectionsUpload.jsp',
+			url : frm.contextPath + '/jsp/hpn/nv/IndoorMapUpload.jsp',
 			buttons : [ {
 				text : '导入',
 				handler : function() {
@@ -181,7 +180,7 @@
 	};
 	
 	var parseData = function(files) {
-		var url = frm.contextPath + '/hpn/nv/collections!parseExcel.do';
+		var url = frm.contextPath + '/hpn/nv/indoorMap!parseExcel.do';
 		$.post(url, '{"files":'+files+'}', function(result) {
 			parent.frm.progressBar('close');//关闭上传进度条
 
@@ -207,10 +206,10 @@
 <body class="easyui-layout" data-options="fit:true,border:false">
 	<form id="searchForm" class="searchForm">
 		  <div class="searchDiv1">
-			藏品名称：<input name="QUERY_t#name_S_LK" style="width: 140px;" />
+			地图编码：<input name="QUERY_t#number_S_LK" style="width: 140px;" />
 		  </div>
 		  <div class="searchDiv2">
-			讲解文字：<input name="QUERY_t#commentText_S_LK" style="width: 140px;" />
+			地图名称：<input name="QUERY_t#name_S_LK" style="width: 140px;" />
 		  </div>
 		  <div class="searchDiv3">
 			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-zoom',plain:true" onclick="grid.datagrid('load',frm.serializeObject($('#searchForm')));">过滤</a>
@@ -220,16 +219,16 @@
 	<div id="toolbar" >
 		<table>
 			<tr>
-			<%if (securityUtil.havePermission("/hpn/nv/collections!save")) {%>
+			<%if (securityUtil.havePermission("/hpn/nv/indoorMap!save")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="addFun();">添加</a></td>
 			<%}%>
-			<%if (securityUtil.havePermission("/hpn/nv/collections!update")) {%>
+			<%if (securityUtil.havePermission("/hpn/nv/indoorMap!update")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="editFun();">修改</a></td>
 			<%}%>
-			<%if (securityUtil.havePermission("/hpn/nv/collections!getById")) {%>
+			<%if (securityUtil.havePermission("/hpn/nv/indoorMap!getById")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="showFun();">查看</a></td>
 			<%}%>
-			<%if (securityUtil.havePermission("/hpn/nv/collections!delete")) {%>
+			<%if (securityUtil.havePermission("/hpn/nv/indoorMap!delete")) {%>
 				<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'ext-icon-note_add',plain:true" onclick="removeFun();">删除</a></td>
 			<%}%>
 			<td><div class="datagrid-btn-separator"></div></td>
