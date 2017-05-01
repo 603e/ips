@@ -17,6 +17,7 @@ import com.hpn.service.nv.ShotNaviServiceI;
 
 import sun.misc.BASE64Decoder;
 import zone.framework.action.BaseAction;
+import zone.framework.util.base.ConfigUtil;
 import zone.framework.util.base.ImageBase64Util;
 
 /**
@@ -85,7 +86,7 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 			//处理拍摄的客户的照片
 			if(!StringUtils.isBlank(data.getPhoto())){
 				String webPath = Thread.currentThread().getContextClassLoader().getResource("").getPath() ;
-				String webSrcPath = "/resources/uploadImg/";
+				String webSrcPath = ConfigUtil.get("uploadImage");
 				webPath = new StringBuilder(webPath).append("../../").append(webSrcPath).toString();
 				String fileName = new StringBuilder(dateFormat.format(new Date())).append(".jpg").toString();
 				ImageBase64Util.makeOriginalImg(data.getPhoto(),webPath, fileName);
