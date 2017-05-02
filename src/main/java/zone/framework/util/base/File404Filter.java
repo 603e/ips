@@ -30,7 +30,7 @@ public class File404Filter extends HttpServlet implements Filter {
 		// String requestURI = req.getRequestURI();
 		String servletPath = req.getServletPath();
 
-		if (servletPath.startsWith(ConfigUtil.get("uploadPath"))) {// 要访问上传的资源了
+		if (servletPath.startsWith(ConfigUtil.get("uploadFile"))) {// 要访问上传的资源了
 			String webParentPath = new File(req.getSession().getServletContext().getRealPath("/")).getParent();// 当前WEB环境的上层目录
 			File f = new File(webParentPath + servletPath);// 要访问的文件在服务器中的绝对路径
 			if (!f.exists()) {// 文件不存在了，返回给客户一个默认图片

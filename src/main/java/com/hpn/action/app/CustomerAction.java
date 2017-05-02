@@ -3,6 +3,8 @@ package com.hpn.action.app;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.ServletInputStream;
@@ -103,14 +105,18 @@ public class CustomerAction extends BaseAction<CustomerPO> {
 		try {
 			Json json = new Json();
 			json.setMsg("登录失败！请核对账号密码是否正确");
+			JSONObject requestJson = new JSONObject();
 			if (data == null) {
 				data = getVoFromRequest();
 			}
-			if (data != null&&((CustomerServiceI)service).login(data)) {
-				json.setSuccess(true);
-				json.setMsg("登录成功！");					
+			if (data != null && ((CustomerServiceI)service).login(data)) {
+//				json.setSuccess(true);
+//				json.setMsg("登录成功！");
+				requestJson.put("success", true);
+				requestJson.put("userName", data.getNumber());
+				requestJson.put("msg", "登录成功！");
 			}
-			writeJson(json);		
+			writeJson(requestJson);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -126,12 +132,34 @@ public class CustomerAction extends BaseAction<CustomerPO> {
 			}
 			Json json = new Json();
 			json.setMsg("注销失败！");
-			if (id != null && !StringUtils.isBlank(id)
-					&&((CustomerServiceI)service).logout(id)) {
+			if (data.getNumber() != null && !StringUtils.isBlank(data.getNumber())
+					&&((CustomerServiceI)service).logout(data.getNumber())) {
 				json.setSuccess(true);
 				json.setMsg("注销成功！");
 			}
 			writeJson(json);				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	synchronized public void query() {
+		try {
+			Json json = new Json();
+			if (data == null) {
+				data = getVoFromRequest();
+			}
+			List<CustomerPO> customers = ((CustomerServiceI) service).findCustomersByNumber(data.getNumber());
+			if (customers.size() == 0){
+				json.setMsg("用户查询失败，该用户重复存在！");
+			}else if (customers.size() > 1) {
+				json.setMsg("用户查询失败，该用户不存在！");
+			} else {
+				json.setObj(customers.get(0));
+				json.setSuccess(true);
+			}
+
+			writeJson(json);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -152,15 +180,21 @@ public class CustomerAction extends BaseAction<CustomerPO> {
 		vo.setBirthday(requestJson.getDate("birthday"));
 		vo.setEmail(requestJson.getString("email"));
 		vo.setIdCode(requestJson.getString("idCode"));
-		vo.setName(requestJson.getString("name"));
+		if(!StringUtils.isEmpty(requestJson.getString("name"))){
+			vo.setName(URLDecoder.decode(requestJson.getString("name"), "UTF-8"));
+		} else {
+			vo.setName(requestJson.getString("name"));
+		}
+		
 		vo.setNumber(requestJson.getString("number"));
 		vo.setOccupation(requestJson.getString("occupation"));
 		vo.setOperater(requestJson.getString("operater"));
-		vo.setPassword(requestJson.getString("password"));
+		vo.setPassword(MD5Util.md5(requestJson.getString("password")));
 		vo.setPhoneNumber(requestJson.getString("phoneNumber"));
 		vo.setPhoto(requestJson.getString("photo"));
 		vo.setSecondPhoneNumber(requestJson.getString("secondPhoneNumber"));
 		vo.setSex(requestJson.getString("sex"));
+		vo.setDeleteFlag("0");
 		bos.close();
 		return vo;
 	}

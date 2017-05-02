@@ -66,9 +66,9 @@ public class CollectionsUploadServlet extends HttpServlet {
 		
 		String datefolder = "/" + DateUtil.dateToString(new Date(), "yyyy") + "/" + DateUtil.dateToString(new Date(), "MM") + "/" + DateUtil.dateToString(new Date(), "dd");// 日期命名的文件夹
 		String webParentPath = new File(session.getServletContext().getRealPath("/")).getParent();// 当前WEB环境的上层目录
-		String realPath = webParentPath + ConfigUtil.get("uploadPath") + fileFolder + datefolder;// 文件上传到服务器的真实路径
+		String realPath = webParentPath + ConfigUtil.get("uploadFile") + fileFolder + datefolder;// 文件上传到服务器的真实路径
 		// System.out.println(realPath);
-		String path = ConfigUtil.get("uploadPath") + fileFolder + datefolder;// 文件在服务器的相对路径
+		String path = ConfigUtil.get("uploadFile") + fileFolder + datefolder;// 文件在服务器的相对路径
 
 		File up = new File(realPath);
 		if (!up.exists()) {

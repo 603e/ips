@@ -49,9 +49,9 @@ public class PlUploadServlet extends HttpServlet {
 		}
 		String datefolder = "/" + DateUtil.dateToString(new Date(), "yyyy") + "/" + DateUtil.dateToString(new Date(), "MM") + "/" + DateUtil.dateToString(new Date(), "dd");// 日期命名的文件夹
 		String webParentPath = new File(request.getSession().getServletContext().getRealPath("/")).getParent();// 当前WEB环境的上层目录
-		String realPath = webParentPath + ConfigUtil.get("uploadPath") + fileFolder + datefolder;// 文件上传到服务器的真实路径
+		String realPath = webParentPath + ConfigUtil.get("uploadFile") + fileFolder + datefolder;// 文件上传到服务器的真实路径
 		// System.out.println(realPath);
-		String path = ConfigUtil.get("uploadPath") + fileFolder + datefolder;// 文件在服务器的相对路径
+		String path = ConfigUtil.get("uploadFile") + fileFolder + datefolder;// 文件在服务器的相对路径
 		// System.out.println(path);
 		if (request.getSession() == null || request.getSession().getAttribute(ConfigUtil.getSessionInfoName()) == null) {// 如果用户没有登录，则不允许上传
 			Map<String, Object> m = new HashMap<String, Object>();

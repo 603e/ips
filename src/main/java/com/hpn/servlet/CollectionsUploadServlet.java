@@ -77,7 +77,7 @@ public class CollectionsUploadServlet extends HttpServlet {
 		
 		String datefolder = "/" + DateUtil.dateToString(new Date(), "yyyy") + "/" + DateUtil.dateToString(new Date(), "MM") + "/" + DateUtil.dateToString(new Date(), "dd");// 日期命名的文件夹
 		String webRootPath = session.getServletContext().getRealPath("/");// 当前WEB环境的上层目录
-		String relativePath = ConfigUtil.get("uploadPath") + fileFolder + datefolder;// 文件在服务器的相对路径
+		String relativePath = ConfigUtil.get("uploadFile") + fileFolder + datefolder;// 文件在服务器的相对路径
 		String realPath = webRootPath + relativePath;// 文件上传到服务器的真实路径
 		// System.out.println(realPath);
 		
@@ -144,21 +144,17 @@ public class CollectionsUploadServlet extends HttpServlet {
 					}
 					outputStream.flush();
 					ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
-					CollectionsUploadServiceI service = (CollectionsUploadServiceI)ctx.getBean("collectionsServiceImpl");
 					SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 					String operater =sessionInfo.getUser().getLoginName();
-					/*if (service.upload(operater,outFile)) {
+					DataSource ds=(DataSource)ctx.getBean("dataSource");      
+					conn=ds.getConnection();  
+					if (upload(conn, operater, outFile)) {
 					} else {
 						Map<String, Object> m = new HashMap<String, Object>();
 						m.put("status", false);
 						response.getWriter().write(JSON.toJSONString(m));
 						return;
-					}*/
-					//List<CollectionsPO> collectionses = upload(operater, outFile);
-					DataSource ds=(DataSource)ctx.getBean("dataSource");      
-					conn=ds.getConnection();  
-					Statement stmt = conn.createStatement();  
-					stmt.execute("INSERT INTO hpn_collections (id,operater) VALUES ('12323','0oo') "); 
+					}
 				}
 				Map<String, Object> m = new HashMap<String, Object>();
 				m.put("status", true);
@@ -191,6 +187,52 @@ public class CollectionsUploadServlet extends HttpServlet {
 			}
 		}
 	
+	}
+	public boolean upload(Connection conn, String operater, File file) throws SQLException {
+		try {
+			InputStream is = new FileInputStream(file.getAbsolutePath());
+			XSSFWorkbook wb = new XSSFWorkbook(is);  
+			int scounts = wb.getNumberOfSheets();//获取表的总数  
+			Statement stmt = conn.createStatement();  
+			for(int i =0 ; i<scounts; i++){
+					Sheet sheet = wb.getSheetAt(i);
+					int j = 0;
+			        for (Row row : sheet) {
+			        	CollectionsPO collections = new CollectionsPO();
+			        	if(j++==0||row.getCell(0)==null){
+			        		continue;
+			        	}
+			        	collections.setNumber(String.valueOf(row.getCell(0).getNumericCellValue()));
+			        	collections.setName(row.getCell(1).getStringCellValue());
+			        	collections.setLatitude(row.getCell(2).getNumericCellValue());
+			        	collections.setLongitude(row.getCell(3).getNumericCellValue());
+			        	collections.setPictureUrl(row.getCell(1).getStringCellValue());
+			        	collections.setVoiceUrl(row.getCell(5).getStringCellValue());
+			        	collections.setCommentText(row.getCell(1).getStringCellValue());
+			        	collections.setOperater(operater);
+			        	StringBuilder insertSql = new StringBuilder("INSERT INTO hpn_collections ")
+			        			.append("(id,createDatetime,updateDatetime,deleteFlag,operater,commentText,latitude,longitude,name,number,pictureUrl,voiceUrl) ")
+			        			.append("VALUE (UUID(),now(),now(),'0',")
+			        			.append("'").append(operater).append("',")
+			        			.append("'").append(collections.getCommentText()).append("',")
+			        			.append("'").append(collections.getLatitude()).append("',")
+			        			.append("'").append(collections.getLongitude()).append("',")
+			        			.append("'").append(collections.getName()).append("',")
+			        			.append("'").append(collections.getNumber()).append("',")
+			        			.append("'").append(collections.getPictureUrl()).append("',")
+			        			.append("'").append(collections.getVoiceUrl()).append("')");
+			        	System.out.println(insertSql.toString());
+			        	stmt.execute(insertSql.toString()); 
+			        	//save(collections);
+			        }
+			}
+			// 关闭
+			wb.close();
+	        is.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	public List<CollectionsPO> upload(String operater, File file) {
