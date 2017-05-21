@@ -36,8 +36,8 @@
 		}
 		var dialog = parent.frm.modalDialog({
 			title : '查看定位导览信息',
-			width : 320,
-			height : 240,
+			width : 640,
+			height : 480,
 			url : frm.contextPath + '/jsp/hpn/nv/SpotDataForm.jsp?id=' + rowId
 		});
 	};
@@ -61,13 +61,13 @@
 				sortable : true
 			},
 			{
-				width : '100',
+				width : '130',
 				title : '纬度',
 				field : 'latitude',
 				sortable : true
 			},
 			{
-				width : '100',
+				width : '130',
 				title : '经度',
 				field : 'longitude',
 				sortable : true

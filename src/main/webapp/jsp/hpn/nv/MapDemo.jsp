@@ -69,7 +69,7 @@
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwZXIiLCJhIjoiY2l3dm9qdzRiMDAxMTJ6cGY2ZHlzOTRvNCJ9.WcJV0GCgk_4XXHa8cnmi_Q';
 
-var showLayer = function(style,center,zoom) {
+var showLayer = function(style,center,zoom,routeData) {
 	var map = new mapboxgl.Map({
 	    container: 'map',
 	    style: style,
@@ -82,7 +82,7 @@ var showLayer = function(style,center,zoom) {
 	        "type": "line",
 	        "source": {
 	            "type": "geojson",
-	            "data": '../../../json/2floor/routes.geojson'
+	            "data": routeData
 	        },
 	        "layout": {
 	            "line-join": "round",
@@ -99,15 +99,15 @@ var showLayer = function(style,center,zoom) {
 
 var showFloorMap = function(n) {
 	if(n==1){
-		showLayer('mapbox://styles/maper/ciwvpz28c002z2qpqxdg2m5cy',[112.520855,-0.008069],10);
+		showLayer('mapbox://styles/maper/ciwvpz28c002z2qpqxdg2m5cy',[112.520855,-0.008069],10,'../../../json/2floor/routes.geojson');
 	}else if(n==2){
-		showLayer('mapbox://styles/maper/cizfl4jyx007m2sji1ndyc4nl',[116.420298, 39.947635],20.5);
+		showLayer('mapbox://styles/maper/cizfl4jyx007m2sji1ndyc4nl',[116.420298, 39.947635],20.5,'../../../json/2floor/routes.geojson');
 	}
-/* 	else if(n==3){
-		showLayer('mapbox://styles/maper/cizfl4jyx007m2sji1ndyc4nl',[116.420298, 39.947635],20.5);
+ 	else if(n==3){
+		showLayer('mapbox://styles/mapbox/dark-v9',[-103.59179687498357, 40.66995747013945],3,'../../../json/earthquakes.geojson');
 	}else if(n==4){
 		showLayer('mapbox://styles/maper/cizfl4jyx007m2sji1ndyc4nl',[116.420298, 39.947635],20.5);
-	} */
+	} 
 }
 
 var floorIds = [ '1', '2', '3', '4'];

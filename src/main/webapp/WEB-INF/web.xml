@@ -4,7 +4,7 @@
   <description>Struts2+Spring3+Hibernate4+EasyUI1.3</description>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath*:META-INF/spring.xml,classpath*:META-INF/spring-*.xml,classpath*:net/bull/javamelody/monitoring-spring.xml</param-value>
+    <param-value>classpath*:spring.xml,classpath*:spring-*.xml,classpath*:net/bull/javamelody/monitoring-spring.xml</param-value>
   </context-param>
   <filter>
     <filter-name>monitoring</filter-name>
@@ -149,6 +149,14 @@
     <servlet-name>getDataServlet</servlet-name>
     <url-pattern>/servlet/getDataServlet</url-pattern>
   </servlet-mapping>
+<!--   <servlet>
+    <servlet-name>wsChat</servlet-name>
+    <servlet-class>com.hpn.websocket.WebServelt</servlet-class>
+  </servlet>
+  <servlet-mapping>
+     <servlet-name>wsChat</servlet-name>
+     <url-pattern>/websocket/chat</url-pattern>
+  </servlet-mapping> -->
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

@@ -22,7 +22,7 @@
 	};
 	var obtainCollectionses = function() {
 		if ($('form').form('validate')) {
-			var url = frm.contextPath + '/hpn/nv/spotData!obtainCollectionses.do';
+			var url = frm.contextPath + '/app/hpn/spotData!findCollectionses.do';
 			$.post(url, frm.serializeObject($('form')), function(result) {
 				if(result.collectionses.length>0) {
 					showPopGrid(result.collectionses);

@@ -31,7 +31,7 @@ import zone.framework.util.base.ImageBase64Util;
  * 
  */
 @Namespace("/app/hpn")
-@Action(value = "/shotNavi")
+@Action(value = "/shotNaviD")
 public class ShotNaviActionW extends BaseAction<ShotNaviPO> {
 
 	/**

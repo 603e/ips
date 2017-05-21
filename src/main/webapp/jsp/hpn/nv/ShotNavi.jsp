@@ -36,8 +36,8 @@
 		}
 		var dialog = parent.frm.modalDialog({
 			title : '查看定位导览信息',
-			width : 320,
-			height : 240,
+			width : 640,
+			height : 480,
 			url : frm.contextPath + '/jsp/hpn/nv/ShotNaviForm.jsp?id=' + rowId
 		});
 	};
