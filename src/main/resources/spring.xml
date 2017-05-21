@@ -20,9 +20,13 @@
 				<value>classpath:config.properties</value>
 			</list>
 		</property>
-	</bean>
-
+	</bean>   
+	
 	<!-- 自动扫描dao和service包(自动注入) -->
-	<context:component-scan base-package="zone.framework.dao,zone.framework.service,com.hpn.service,com.ipsbi.service" />
+	<context:component-scan base-package="zone.framework.dao,zone.framework.service,com.hpn.service,com.ipsbi.service,com.hpn.task" />
+
+	<task:annotation-driven executor="executor" scheduler="scheduler" />
+	<task:scheduler id="scheduler" pool-size="10" />
+	<task:executor id="executor" pool-size="5" /> 
 
 </beans>

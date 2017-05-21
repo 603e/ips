@@ -1,14 +1,12 @@
 package com.hpn.service.cr.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.hpn.model.cr.CustomerPositionPO;
-import com.hpn.service.cr.CustomerPositionServiceI;
+import com.hpn.model.cr.CustomerOnlinePO;
+import com.hpn.service.cr.CustomerOnlineServiceI;
 
 import zone.framework.service.impl.BaseServiceImpl;
 
@@ -19,21 +17,27 @@ import zone.framework.service.impl.BaseServiceImpl;
  * 
  */
 @Service
-public class CustomerOnlineServiceImpl extends BaseServiceImpl<CustomerPositionPO> implements CustomerPositionServiceI {
-	private static String dateFormat = "yyyy-MM-dd HH:mm:ss";
+public class CustomerOnlineServiceImpl extends BaseServiceImpl<CustomerOnlinePO> implements CustomerOnlineServiceI {
 
 	@Override
-	public List<CustomerPositionPO> findCurrentCustomerPositions(String channelType, Date minTime,Date maxTime) {
-		SimpleDateFormat sdf=new SimpleDateFormat(dateFormat); 
-		String max=sdf.format(maxTime);
-		String min=sdf.format(minTime);   
-		StringBuilder hqlBuilder = new StringBuilder("select c from CustomerPositionPO c")
-				.append(" WHERE c.customer.createDatetime between'").append(min).append("' and '").append(max).append("'");
-		if(!StringUtils.isBlank(channelType)){
-			hqlBuilder.append(" AND c.channelType ='").append(channelType).append("'");
+	public CustomerOnlinePO findLastLoginCustomer(String customerId,String macCode) {
+		List<CustomerOnlinePO> pos = findLoginCustomers(customerId, macCode);
+		if(pos.size()>0){
+			return pos.get(0);
+		}else{
+			return null;
+		}
+		
+	}
+
+	@Override
+	public List<CustomerOnlinePO> findLoginCustomers(String customerId, String macCode) {
+		StringBuilder hqlBuilder = new StringBuilder("select c from CustomerOnlinePO c")
+				.append(" WHERE c.customer.id ='").append(customerId).append("'");
+		if(!StringUtils.isBlank(macCode)){
+			hqlBuilder.append(" AND c.macCode ='").append(macCode).append("'");
 		}		
-		hqlBuilder.append(" GROUP BY c.macCode ");		
-		hqlBuilder.append(" ORDER BY c.createDatetime desc");
+		hqlBuilder.append(" ORDER BY c.loginDatetime desc");
 		return find(hqlBuilder.toString());
 	}
 
