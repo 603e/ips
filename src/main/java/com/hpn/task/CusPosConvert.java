@@ -10,6 +10,6 @@ public class CusPosConvert {
 
 	@Scheduled(cron="0/10 * *  * * ? ")
 	public void convertGauss2Geodetic(){
-		System.out.println(new Date());		
+		//System.out.println(new Date());		
 	}
 }
