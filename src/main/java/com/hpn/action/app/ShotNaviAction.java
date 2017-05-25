@@ -38,6 +38,8 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 	private static final long serialVersionUID = 1L;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
 
+	static String webSrcPath = ConfigUtil.get("uploadImage");
+
 	/**
 	 * 注入业务逻辑，使当前action调用service.xxx的时候，直接是调用基础业务逻辑
 	 * 
@@ -60,46 +62,14 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 				request.setCharacterEncoding("utf-8");  
 		        String macCode = request.getParameter("macCode");  
 		        String operater = request.getParameter("operater");  
-		        String photo = request.getParameter("photo");		        
-		        try {  
-		        	  
-		            // 对base64数据进行解码 生成 字节数组，不能直接用Base64.decode（）；进行解密  
-		            byte[] photoimg = new BASE64Decoder().decodeBuffer(photo);  
-		            for (int i = 0; i < photoimg.length; ++i) {  
-		                if (photoimg[i] < 0) {  
-		                    // 调整异常数据  
-		                    photoimg[i] += 256;  
-		                }  
-		            } 
-		            // byte[] photoimg = Base64.decode(photo);//此处不能用Base64.decode（）方法解密，我调试时用此方法每次解密出的数据都比原数据大  所以用上面的函数进行解密，在网上直接拷贝的，花了好几个小时才找到这个错误（菜鸟不容易啊）  
-		            System.out.println("图片的大小：" + photoimg.length);
-		            
-		        } catch (Exception e) {  
-		            // TODO Auto-generated catch block  
-		            e.printStackTrace();  
-		        }  
+		        String photo = request.getParameter("photo");
 		        data = new ShotNaviPO();
 		        data.setPhoto(photo);
 		        data.setMacCode(macCode);
-		        
+		        data.setOperater(operater);
 			}
-			//处理拍摄的客户的照片
-			if(!StringUtils.isBlank(data.getPhoto())){
-				String webPath = Thread.currentThread().getContextClassLoader().getResource("").getPath() ;
-				String webSrcPath = ConfigUtil.get("uploadImage");
-				webPath = new StringBuilder(webPath).append("../../").append(webSrcPath).toString();
-				String fileName = new StringBuilder(dateFormat.format(new Date())).append(".jpg").toString();
-				ImageBase64Util.makeOriginalImg(data.getPhoto(),webPath, fileName);
-				String contextPath =  getSession().getServletContext().getContextPath();
-				data.setPhotoUrl(new StringBuilder(contextPath).append(webSrcPath).append(fileName).toString());				
-			}
-			HttpServletRequest request = getRequest();
-			String imgUrl = new StringBuilder("http://").append(request.getServerName())// 服务器地址
-					.append(":").append(request.getServerPort()) // 端口号
-					.append(request.getContextPath()).append("/resources/uploadImg/d9b811f3c51d843.jpg").toString(); // 项目名称
-			Set<CollectionsPO> collectionses = ((ShotNaviServiceI) service).saveShotNavi(data, imgUrl);
-			data.setCollectionses(collectionses);
-			writeJson(data);
+	        com.hpn.action.nv.ShotNaviAction action = new com.hpn.action.nv.ShotNaviAction();
+	        action.findCollections();
 		} catch (Exception e) { 
             e.printStackTrace();
         }		

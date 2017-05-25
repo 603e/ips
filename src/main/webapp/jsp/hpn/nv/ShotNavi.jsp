@@ -61,7 +61,7 @@
 				sortable : true
 			},
 			{
-				width : '100',
+				width : '300',
 				title : '照片URI',
 				field : 'photoUrl',
 				sortable : true

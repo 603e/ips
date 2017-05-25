@@ -5,18 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hpn.model.cr.CustomerOnlinePO;
-import com.hpn.model.cr.CustomerPO;
 import com.hpn.model.cr.CustomerPositionPO;
-import com.hpn.service.cr.CustomerOnlineServiceI;
 import com.hpn.service.cr.CustomerPositionServiceI;
-import com.hpn.service.cr.CustomerServiceI;
 
 import zone.framework.service.impl.BaseServiceImpl;
-import zone.framework.util.base.BeanUtils;
 
 /**
  * 客户管理
@@ -34,7 +28,7 @@ public class CustomerPositionServiceImpl extends BaseServiceImpl<CustomerPositio
 		String max=sdf.format(maxTime);
 		String min=sdf.format(minTime);   
 		StringBuilder hqlBuilder = new StringBuilder("select c from CustomerPositionPO c")
-				.append(" WHERE c.customer.createDatetime between'").append(min).append("' and '").append(max).append("'");
+				.append(" WHERE c.createDatetime between'").append(min).append("' and '").append(max).append("'");
 		if(!StringUtils.isBlank(channelType)){
 			hqlBuilder.append(" AND c.channelType ='").append(channelType).append("'");
 		}		

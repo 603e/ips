@@ -26,13 +26,13 @@
 </head>
 <body>
 <div id='map'></div>
-<!-- <pre id='info'></pre> -->
+<pre id='info'></pre> 
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwZXIiLCJhIjoiY2l3dm9qdzRiMDAxMTJ6cGY2ZHlzOTRvNCJ9.WcJV0GCgk_4XXHa8cnmi_Q';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/maper/cizfl4jyx007m2sji1ndyc4nl',
+    style: 'mapbox://styles/maper/ciwvpz28c002z2qpqxdg2m5cy',
     center: [116.420298, 39.947635],
     zoom: 20.5
 });

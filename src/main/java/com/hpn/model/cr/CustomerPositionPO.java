@@ -2,8 +2,12 @@ package com.hpn.model.cr;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -37,6 +41,8 @@ public class CustomerPositionPO extends Base implements Serializable{
 	
 	//方位角
 	private int azimuth;
+	
+	private CusTerminalLocPO cusTerminalLoc;
 	
 	@Column(name = "channelType", length = 2)	
 	public String getChannelType() {
@@ -81,6 +87,16 @@ public class CustomerPositionPO extends Base implements Serializable{
 
 	public void setMacCode(String mACCode) {
 		macCode = mACCode;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "dev_id")
+	public CusTerminalLocPO getCusTerminalLoc() {
+		return cusTerminalLoc;
+	}
+
+	public void setCusTerminalLoc(CusTerminalLocPO cusTerminalLoc) {
+		this.cusTerminalLoc = cusTerminalLoc;
 	}
 
 }

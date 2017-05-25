@@ -3,6 +3,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,7 +15,12 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "tab_terminal_loc", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class CustomerTerminalLocat {
+public class CusTerminalLocPO implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int devId;
 	private String muMac;
 	private double X;
@@ -31,8 +37,9 @@ public class CustomerTerminalLocat {
 	private String frameControl;
 	private int channel;
 	private Date recvTime;
-	
-	@Column(name = "dev_id", length = 10)	
+
+	@Id
+	@Column(name = "dev_id", unique = true, nullable = false, length = 10)
 	public int getDevId() {
 		return devId;
 	}

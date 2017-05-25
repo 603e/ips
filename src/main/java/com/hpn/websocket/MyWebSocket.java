@@ -11,7 +11,7 @@ import javax.websocket.server.ServerEndpoint;
 
  
 //该注解用来指定一个URI，客户端可以通过这个URI来连接到WebSocket。类似Servlet的注解mapping。无需在web.xml中配置。
-@ServerEndpoint("/websocket/chat")
+@ServerEndpoint("/websocket/chat2")
 public class MyWebSocket {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;

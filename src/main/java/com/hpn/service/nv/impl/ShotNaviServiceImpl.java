@@ -45,6 +45,7 @@ public class ShotNaviServiceImpl extends BaseServiceImpl<ShotNaviPO> implements 
 		String picturnJson = HttpClientUtil.httpClientGet("http://101.201.239.101:5000/classify_url_sim", params, "UTF-8");
 		JSONObject json = JSONObject.fromObject(picturnJson);
 		String errorMessage = (String)json.get("ErrorMessage");
+		logger.info(errorMessage);
 		JSONArray pictureIds = (JSONArray)json.get("PredictionIDTop5");
 		Set<CollectionsPO> collectionses = new HashSet<>();
 		for(Iterator pictureId = pictureIds.iterator(); pictureId.hasNext();){

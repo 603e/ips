@@ -24,7 +24,7 @@
 
 	var obtainCollections = function() {
 		if ($('form').form('validate')) {
-			var url = frm.contextPath + '/hpn/nv/shotNavi!obtainCollections.do';
+			var url = frm.contextPath + '/hpn/nv/shotNavi!findCollections.do';
 			$.post(url, frm.serializeObject($('form')), function(result) {
 				if(result.collectionses) {
 					showPopGrid(result.collectionses);

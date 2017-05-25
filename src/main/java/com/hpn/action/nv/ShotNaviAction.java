@@ -17,6 +17,7 @@ import com.hpn.service.nv.ShotNaviServiceI;
 
 import zone.framework.action.BaseAction;
 import zone.framework.model.easyui.Json;
+import zone.framework.util.base.ConfigUtil;
 import zone.framework.util.base.ImageBase64Util;
 
 /**
@@ -31,7 +32,8 @@ import zone.framework.util.base.ImageBase64Util;
 @Action(value = "/shotNavi")
 public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 
-	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");//设置日期格式
+	static String webSrcPath = ConfigUtil.get("uploadImage");
 	/**
 	 * 
 	 */
@@ -70,18 +72,17 @@ public class ShotNaviAction extends BaseAction<ShotNaviPO> {
 			//处理拍摄的客户的照片
 			if(!StringUtils.isBlank(data.getPhoto())){
 				String webPath = Thread.currentThread().getContextClassLoader().getResource("").getPath() ;
-				String webSrcPath = "/resources/uploadImg/";
 				webPath = new StringBuilder(webPath).append("../../").append(webSrcPath).toString();
 				String fileName = new StringBuilder(dateFormat.format(new Date())).append(".jpg").toString();
 				ImageBase64Util.makeOriginalImg(data.getPhoto(),webPath, fileName);
-				String contextPath =  getSession().getServletContext().getContextPath();
-				data.setPhotoUrl(new StringBuilder(contextPath).append(webSrcPath).append(fileName).toString());				
+				//String contextPath =  getSession().getServletContext().getContextPath();
+				data.setPhotoUrl(new StringBuilder(webSrcPath).append(fileName).toString());				
 			}
 			HttpServletRequest request = getRequest();
 			String imgUrl = new StringBuilder("http://").append(request.getServerName())//服务器地址  
 					.append( ":").append(request.getServerPort())           //端口号  
 					.append(request.getContextPath())
-					.append("/resources/uploadImg/d9b811f3c51d843.jpg").toString();      //项目名称  
+					.append(data.getPhotoUrl()).toString();      //项目名称  
 			Set<CollectionsPO> collectionses = ((ShotNaviServiceI)service).saveShotNavi(data,imgUrl);
 			data.setCollectionses(collectionses);
 			writeJson(data);
