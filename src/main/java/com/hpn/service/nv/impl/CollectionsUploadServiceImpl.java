@@ -53,6 +53,7 @@ public class CollectionsUploadServiceImpl extends BaseServiceImpl<CollectionsPO>
 			}
 			// 关闭
 	        is.close();
+	        wb.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

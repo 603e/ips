@@ -52,6 +52,7 @@ public class IndoorMapServiceImpl extends BaseServiceImpl<IndoorMapPO> implement
 			}
 			// 关闭
 	        is.close();
+	        wb.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -40,15 +40,16 @@ public class ShotNaviServiceImpl extends BaseServiceImpl<ShotNaviPO> implements 
 	public Set<CollectionsPO> saveShotNavi(ShotNaviPO data, String imgUrl){
 		save(data);
 		Map<String, Object> params = new HashedMap<>();
-		imgUrl="https://img3.doubanio.com/view/status/raw/public/d9b811f3c51d843.jpg";
+		//imgUrl="https://img3.doubanio.com/view/status/raw/public/d9b811f3c51d843.jpg";
 		params.put("imgurl", imgUrl);
-		String picturnJson = HttpClientUtil.httpClientGet("http://101.201.239.101:5000/classify_url_sim", params, "UTF-8");
+		String picturnJson = HttpClientUtil.httpClientGet("http://47.94.129.191:5000/classify_url_sim", params, "UTF-8");
 		JSONObject json = JSONObject.fromObject(picturnJson);
 		String errorMessage = (String)json.get("ErrorMessage");
 		logger.info(errorMessage);
 		JSONArray pictureIds = (JSONArray)json.get("PredictionIDTop5");
 		Set<CollectionsPO> collectionses = new HashSet<>();
-		for(Iterator pictureId = pictureIds.iterator(); pictureId.hasNext();){
+		for(@SuppressWarnings("rawtypes")
+		Iterator pictureId = pictureIds.iterator(); pictureId.hasNext();){
 			String picNumber = String.valueOf(pictureId.next());
 			HqlFilter hqlFilter = new HqlFilter();
 			hqlFilter.addFilter("QUERY_t#number_S_EQ", picNumber);

@@ -265,6 +265,7 @@ public class CollectionsUploadServlet extends HttpServlet {
 			}
 			// 关闭
 	        is.close();
+	        wb.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,7 +1,5 @@
 package com.hpn.websocket;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;

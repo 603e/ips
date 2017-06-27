@@ -78,6 +78,7 @@ public class CollectionsServiceImpl extends BaseServiceImpl<CollectionsPO> imple
 			}
 			// 关闭
 	        is.close();
+	        wb.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
