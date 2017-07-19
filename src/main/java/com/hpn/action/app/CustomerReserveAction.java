@@ -75,6 +75,7 @@ public class CustomerReserveAction extends BaseAction<CustomerReservePO> {
 		        data.setReserveNum(Integer.valueOf(request.getParameter("reserveNum")));
 		        data.setReserveDate(format.parse(request.getParameter("reserveDate")));
 		        data.setOperater(request.getParameter("operater"));
+		        data.getCustomer().setId(request.getParameter("customer.id"));
 			}
 			service.save(data);
 			json.setSuccess(true);
