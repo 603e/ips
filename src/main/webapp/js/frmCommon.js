@@ -3,7 +3,7 @@
 			parent.$.messager.alert("提示信息","您没有权限操作超级管理员!");
 		}else{
 			var dialog = parent.frm.modalDialog({
-				title : '修改机构',
+				title : '选择机构',
 				url : frm.contextPath + '/jsp/base/FrmUserOrganizationGrant.jsp?id=' + id,
 				buttons : [ {
 					text : '选择',

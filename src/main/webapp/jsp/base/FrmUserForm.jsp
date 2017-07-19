@@ -150,8 +150,7 @@
 		});
 		uploader.init();
 
-	});	
-
+	});
 
 </script>
 </head>

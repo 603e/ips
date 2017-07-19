@@ -27,7 +27,7 @@ public class BaseServiceImpl<T> implements BaseServiceI<T> {
 	protected Logger logger = Logger.getLogger(BaseServiceImpl.class);
 
 	@Autowired
-	private BaseDaoI<T> baseDao;
+	protected BaseDaoI<T> baseDao;
 
 	@Override
 	public Serializable save(T o) {
